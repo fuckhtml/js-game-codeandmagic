@@ -36,6 +36,14 @@ var WIZARD_EYES = [
   'green'
 ];
 
+var WIZARD_FIREBALLS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 // открытие похожих персонажей
@@ -109,6 +117,29 @@ userNameInput.addEventListener('input', function(event) {
     target.setCustomValidity('');
   }
 });
+
+// Задаем обработчики для смены характеристик персонажа
+var player = document.querySelector(".setup-player");
+// Меняет цвет мантии
+var playerCoat = player.querySelector(".wizard-coat");
+var changeCoat = function() {
+  playerCoat.style.fill = WIZARD_COATS[ getRandomValue(0, WIZARD_COATS.length) ];
+}
+playerCoat.addEventListener('click', changeCoat);
+
+// Меняет цвет глаз
+var playerEyes = player.querySelector(".wizard-eyes");
+var changeEyes = function() {
+  playerEyes.style.fill = WIZARD_EYES[ getRandomValue(0, WIZARD_EYES.length) ];
+}
+playerEyes.addEventListener('click', changeEyes);
+
+// Меняет цвет фаербола
+var playerFireball = player.querySelector(".setup-fireball-wrap");
+var changeFireball = function() {
+  playerFireball.style.backgroundColor = WIZARD_FIREBALLS[ getRandomValue(0, WIZARD_FIREBALLS.length) ];
+}
+playerFireball.addEventListener('click', changeFireball);
 
 // Находим контейнер для персонажей и темплейт для персонажа. Сборка персонажа
 var similarListElement = document.querySelector('.setup-similar-list');
