@@ -36,10 +36,79 @@ var WIZARD_EYES = [
   'green'
 ];
 
-// Открываем главный блок персонажа при запуске
-var userDialog = document.querySelector('.overlay.setup');
-userDialog.classList.remove('hidden'); 
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+// открытие похожих персонажей
+//setup.querySelector('.setup-similar').classList.remove('hidden');
+
+// Устанавливаем обработчики на открытие и закрытие
+// setup через клики и клавиши
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+
+// Обработчик для закрытия setup при нажатии на Esc
+var onPopupEscPress = function(event) {
+  if (event.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var openPopup = function() {
+  setup.classList.remove('hidden');   
+
+  // Добавим обработчик здесь, так как при  
+  // закрытом окне ESC работает для паузы
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function() {
+  setup.classList.add('hidden'); 
+  // Удаляем обработчик, чтобы не повторять 
+  // это действие при закрытом окне
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function(event) {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function(event) {
+  if (event.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function() {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function(event) {
+  if (event.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+// Задаем валидацию на ввод имени
+var userNameInput = setup.querySelector(".setup-user-name");
+userNameInput.addEventListener('invalid', function(event) {
+  if (userNameInput.validity.tooShort) {
+    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (userNameInput.validity.tooLong) {
+    userNameInput.setCustomValidity('Имя должно состоять максимум из 25-ти символов');
+  } else if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity('Обязательное поле');
+  }
+});
+// Дополнительная валидация для edge, т.к. minlength в нем не работает
+userNameInput.addEventListener('input', function(event) {
+  var target = event.target;
+  if (target.value.length < 2) {
+    target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else {
+    target.setCustomValidity('');
+  }
+});
 
 // Находим контейнер для персонажей и темплейт для персонажа. Сборка персонажа
 var similarListElement = document.querySelector('.setup-similar-list');
