@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 window.renderStatistics = function(ctx, names, times) {
 
@@ -60,4 +60,4 @@ window.renderStatistics = function(ctx, names, times) {
     ctx.fillText(name, nameX, nameY);
   }
 
-}
+};
