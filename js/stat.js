@@ -36,5 +36,4 @@ window.renderStatistics = function (ctx, players, times) {
     ctx.fillRect(CLOUD_X + GAP + TEXT_WIDTH, CLOUD_Y + (GAP + BAR_HEIGHT) * i + GAP, BAR_WIDTH * (times[i] / maxTime), BAR_HEIGHT);
   }
 
-
 };
