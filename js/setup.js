@@ -4,18 +4,41 @@ var userOpen = document.querySelector('.setup-open');
 var userDialog = document.querySelector('.setup');
 var userClose = userDialog.querySelector('.setup-close');
 
-userOpen.addEventListener('click', function () {
+var onUserDialogEscPress = function (event) {
+  if (event.keyCode === 27) {
+    closeUserDialog();
+  }
+};
+
+var openUserDialog = function () {
   userDialog.classList.remove('hidden');
-  userDialog.querySelector('.setup-similar').classList.remove('hidden');
+  document.addEventListener('keydown', onUserDialogEscPress);
+};
+var closeUserDialog = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onUserDialogEscPress);
+};
+
+userOpen.addEventListener('click', function () {
+  openUserDialog();
+});
+userOpen.addEventListener('keydown', function (event) {
+  if (event.keyCode === 13) {
+    openUserDialog(event);
+  }
 });
 
 userClose.addEventListener('click', function () {
-  userDialog.classList.add('hidden');
-  userDialog.querySelector('.setup-similar').classList.add('hidden');
+  closeUserDialog();
+});
+userClose.addEventListener('keydown', function (event) {
+  if (event.keyCode === 13) {
+    closeUserDialog(event);
+  }
 });
 
 var userNameInput = userDialog.querySelector('.setup-user-name');
-userNameInput.addEventListener('invalid', function (event) {
+userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
   } else if (userNameInput.validity.tooLong) {
