@@ -1,8 +1,18 @@
 'use strict';
 
+var userOpen = document.querySelector('.setup-open');
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+var userClose = userDialog.querySelector('.setup-close');
+
+userOpen.addEventListener('click', function() {
+  userDialog.classList.remove('hidden');
+  userDialog.querySelector('.setup-similar').classList.remove('hidden');
+});
+
+userClose.addEventListener('click', function() {
+  userDialog.classList.add('hidden');
+  userDialog.querySelector('.setup-similar').classList.add('hidden');
+});
 
 var similarWizardsList = userDialog.querySelector('.setup-similar-list');
 var similarWizardsTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
