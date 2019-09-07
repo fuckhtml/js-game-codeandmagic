@@ -1,44 +1,48 @@
 'use strict';
 
 var userOpen = document.querySelector('.setup-open');
-var userDialog = document.querySelector('.setup');
-var userClose = userDialog.querySelector('.setup-close');
+var setup = document.querySelector('.setup');
+var userClose = setup.querySelector('.setup-close');
 
-
-var onUserDialogEscPress = function (event) {
+// открытие-закрытие
+var onSetupEscPress = function (event) {
   if (event.keyCode === 27) {
-    closeUserDialog();
+    closeSetup();
   }
 };
 
-var openUserDialog = function () {
-  userDialog.classList.remove('hidden');
-  document.addEventListener('keydown', onUserDialogEscPress);
+var openSetup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onSetupEscPress);
 };
-var closeUserDialog = function () {
-  userDialog.classList.add('hidden');
-  document.removeEventListener('keydown', onUserDialogEscPress);
+var closeSetup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onSetupEscPress);
 };
 
 userOpen.addEventListener('click', function () {
-  openUserDialog();
+  openSetup();
 });
 userOpen.addEventListener('keydown', function (event) {
   if (event.keyCode === 13) {
-    openUserDialog(event);
+    openSetup(event);
   }
 });
 
 userClose.addEventListener('click', function () {
-  closeUserDialog();
+  closeSetup();
 });
 userClose.addEventListener('keydown', function (event) {
   if (event.keyCode === 13) {
-    closeUserDialog(event);
+    closeSetup(event);
   }
 });
 
-var userNameInput = userDialog.querySelector('.setup-user-name');
+// перетаскиевание
+
+
+// валидация
+var userNameInput = setup.querySelector('.setup-user-name');
 userNameInput.addEventListener('invalid', function () {
   if (userNameInput.validity.tooShort) {
     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
@@ -49,7 +53,7 @@ userNameInput.addEventListener('invalid', function () {
   }
 });
 
-var similarWizardsList = userDialog.querySelector('.setup-similar-list');
+var similarWizardsList = setup.querySelector('.setup-similar-list');
 var similarWizardsTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
 var wizardNames = [
