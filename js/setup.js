@@ -4,6 +4,7 @@ var userOpen = document.querySelector('.setup-open');
 var userDialog = document.querySelector('.setup');
 var userClose = userDialog.querySelector('.setup-close');
 
+
 var onUserDialogEscPress = function (event) {
   if (event.keyCode === 27) {
     closeUserDialog();
