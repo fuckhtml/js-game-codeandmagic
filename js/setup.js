@@ -40,6 +40,54 @@ userClose.addEventListener('keydown', function (event) {
 
 // перетаскиевание
 
+var dialogHandler = setup.querySelector('.setup-user');
+dialogHandler.addEventListener('mousedown', function (event) {
+  event.preventDefault();
+
+  var startCoords = {
+    x: event.clientX,
+    y: event.clientY,
+  };
+
+  var dragged = false;
+
+  var onMouseMove = function (moveEvent) {
+    moveEvent.preventDefault();
+
+    dragged = true;
+
+    var shift = {
+      x: moveEvent.clientX - startCoords.x,
+      y: moveEvent.clientY - startCoords.y,
+    };
+
+    startCoords = {
+      x: moveEvent.clientX,
+      y: moveEvent.clientY,
+    };
+
+    setup.style.top = (setup.offsetTop + shift.y) + 'px';
+    setup.style.left = (setup.offsetLeft + shift.x) + 'px';
+  };
+
+  var onMouseUp = function (upEvent) {
+    upEvent.preventDefault();
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+
+    if (dragged) {
+      var onClickPreventDefauld = function (event) {
+        event.preventDefault();
+        dialogHandler.removeEventListener('click', onClickPreventDefauld);
+      };
+      dialogHandler.addEventListener('click', onClickPreventDefauld);
+    }
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
 
 // валидация
 var userNameInput = setup.querySelector('.setup-user-name');
