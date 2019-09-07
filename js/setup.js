@@ -4,14 +4,25 @@ var userOpen = document.querySelector('.setup-open');
 var userDialog = document.querySelector('.setup');
 var userClose = userDialog.querySelector('.setup-close');
 
-userOpen.addEventListener('click', function() {
+userOpen.addEventListener('click', function () {
   userDialog.classList.remove('hidden');
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
 });
 
-userClose.addEventListener('click', function() {
+userClose.addEventListener('click', function () {
   userDialog.classList.add('hidden');
   userDialog.querySelector('.setup-similar').classList.add('hidden');
+});
+
+var userNameInput = userDialog.querySelector('.setup-user-name');
+userNameInput.addEventListener('invalid', function (event) {
+  if (userNameInput.validity.tooShort) {
+    userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (userNameInput.validity.tooLong) {
+    userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+  } else if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity('Обязательное поле');
+  }
 });
 
 var similarWizardsList = userDialog.querySelector('.setup-similar-list');
