@@ -43,7 +43,7 @@
 
   // перетаскивание
 
-  var dialogHandler = setup.querySelector('.setup-user');
+  var dialogHandler = setup.querySelector('.setup-user > .upload');
   dialogHandler.addEventListener('mousedown', function (event) {
     event.preventDefault();
 
