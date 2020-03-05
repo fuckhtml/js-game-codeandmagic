@@ -54,7 +54,7 @@ var collectPlayers = function(names, times) {
 
 window.renderStatistics = function(ctx, names, times) {
   
-  drawRect(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, "blue");
+  // drawRect(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, "blue");
   drawRect(ctx, BG_X + 10, BG_Y + 10, BG_WIDTH, BG_HEIGHT, "rgba(0, 0, 0, 0.7)");
   drawRect(ctx, BG_X     , BG_Y     , BG_WIDTH, BG_HEIGHT, "white");
     
