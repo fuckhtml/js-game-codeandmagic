@@ -183,17 +183,51 @@ userNameInput.addEventListener('invalid', function() {
   }
 });
 
-/*
-userNameInput.addEventListener('input', function(event) {
-  var target = event.target;
-  if (target.value.length < 2) {
-    target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-  } else if (target.value.length > 25) {
-    target.setCustomValidity('Имя не должно превышать 25-ти символов');
-  } else if (target.value.length == 0){
-    target.setCustomValidity('Введите имя');
-  } else {
-    target.setCustomValidity('');
+
+var setupUserPic = setup.querySelector('.setup-user-pic-file');
+setupUserPic.addEventListener('mousedown', function (event) {  
+  
+  var onClickPreventDefault = function(event) {
+    event.preventDefault();
   }
-})
-*/
+  
+  var onMouseMove = function (event) {
+    dragged = true;
+
+    var shift = {
+      x: startCoords.x - event.clientX,
+      y: startCoords.y - event.clientY,
+    };
+    
+    startCoords = {
+      x: event.clientX,
+      y: event.clientY,
+    };
+    
+    setup.style.left = (setup.offsetLeft - shift.x) + "px";
+    setup.style.top = (setup.offsetTop - shift.y) + "px";
+  }
+  
+  var onMouseUp = function (event) {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    
+    if (dragged) {
+      var onClickPreventDefault = function(event) {
+        event.preventDefault();
+        setupUserPic.removeEventListener('click', onClickPreventDefault);
+      }
+      setupUserPic.addEventListener('click', onClickPreventDefault);
+    }
+  }
+  
+  var startCoords = {
+    x: event.clientX,
+    y: event.clientY,
+  };
+  
+  var dragged = false;
+  
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
