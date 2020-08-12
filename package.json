@@ -1,0 +1,25 @@
+{
+  "name": "code-and-magic",
+  "version": "17.0.0",
+  "private": true,
+  "description": "code and magic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fuckhtml/js-game-codeandmagic"
+  },
+  "bugs": {
+    "url": "https://github.com/fuckhtml/js-game-codeandmagic/issues"
+  },
+  "devDependencies": {
+    "eslint": "4.19.1",
+    "eslint-config-htmlacademy": "0.5.2"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "scripts": {
+    "test": "eslint js/"
+  },
+  "engines": {
+    "node": "8.11"
+  }
+}

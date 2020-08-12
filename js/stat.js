@@ -1,63 +1,39 @@
 'use strict';
 
-window.renderStatistics = function(ctx, names, times) {
+var CLOUD_WIDTH = 500;
+var CLOUD_HEIGHT = 200;
+var CLOUD_X = 100;
+var CLOUD_Y = 50;
+var GAP = 10;
+var FONT_GAP = 15;
+var TEXT_WIDTH = 50;
+var BAR_WIDTH = CLOUD_WIDTH - GAP - TEXT_WIDTH - GAP;
+var BAR_HEIGHT = 20;
 
-  // Рисуем облако с тенью
-  ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-  ctx.fillRect(100, 20, 420, 270);
-  ctx.fillStyle = "white";
-  ctx.fillRect(100, 10, 420, 270);
-
-  // Пишем заголовок
-  var fontFamily = 'PT Mono';
-  var fontSize = 16;
-  var color = 'black';
-  var initialX = 220; // ***
-  var initialY = 40;
-
+var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
-  ctx.font = fontSize + ' ' + fontFamily;
-  ctx.fillText('Ура вы победили!', initialX, initialY);
-  ctx.fillText('Список результатов:', initialX, initialY + fontSize);
+  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+};
 
-  // Ищем максимальное время (для вычисления коэффициента ширины гистограммы)
-  var maxTime = -1;
-  var maxIndex = -1;
-
-  for (var i = 0; i < times.length; i++) {
-    var time = times[i];
-    if (time > maxTime) {
-      maxTime = time;
-      maxIndex = i; 
+var getMaxElement = function (arr) {
+  var maxElement = arr[0];
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] > maxElement) {
+      maxElement = arr[i];
     }
   }
+  return maxElement;
+};
 
-  // Отрисовываем горизонтальную гистограмму
-  var histogramHeight = 150;
-  var barWidth = 40;
-  var spaceBetween = 50;
-  var initialX = 120;
-  var initialY = 80 + histogramHeight;
-  var lengthPerTime = histogramHeight / maxTime;
+window.renderStatistics = function (ctx, players, times) {
+  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.3)');
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
-  for (var i = 0; i < names.length; i++) {
-    var barX1 = initialX + i * (barWidth + spaceBetween);
-    var barY1 = initialY;
-    var barX2 = barWidth;
-    var barY2 = -1 * (times[i] * lengthPerTime);
-
-    if (names[i] == 'Вы') {
-      ctx.fillStyle = 'red';
-    } else {
-      ctx.fillStyle = 'blue';
-    }
-    
-    ctx.fillRect(barX1, barY1, barX2, barY2);
-
-    var name = names[i];
-    var nameX = initialX + i * (barWidth + spaceBetween);
-    var nameY = initialY + fontSize;
-    ctx.fillText(name, nameX, nameY);
+  var maxTime = getMaxElement(times);
+  ctx.fillStyle = '#000';
+  for (var i = 0; i < players.length; i++) {
+    ctx.fillText(players[i], CLOUD_X + GAP, CLOUD_Y + GAP + FONT_GAP + (BAR_HEIGHT + GAP) * i);
+    ctx.fillRect(CLOUD_X + GAP + TEXT_WIDTH, CLOUD_Y + (GAP + BAR_HEIGHT) * i + GAP, BAR_WIDTH * (times[i] / maxTime), BAR_HEIGHT);
   }
 
 };
